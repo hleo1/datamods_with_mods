@@ -88,6 +88,18 @@ describe_col_num <- function(x, with_summary = TRUE) {
           i18n("Mean:"), round(mean(x, na.rm = TRUE), 2)
         ),
         tags$div(
+          i18n("Median:"), round(median(x, na.rm = TRUE), 2)
+        ),
+        tags$div(
+          i18n("SD:"), round(sd(x, na.rm = TRUE), 2)
+        ),
+        tags$div(
+          i18n("P10:"), round(quantile(x, 0.1, na.rm = TRUE), 2)
+        ),
+        tags$div(
+          i18n("P90:"), round(quantile(x, 0.9, na.rm = TRUE), 2)
+        ),
+        tags$div(
           i18n("Max:"), round(max(x, na.rm = TRUE), 2)
         ),
         tags$div(
