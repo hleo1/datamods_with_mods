@@ -1,4 +1,3 @@
-
 #' @importFrom htmltools tagList tags css
 describe_col_char <- function(x, with_summary = TRUE) {
   tags$div(
@@ -71,6 +70,16 @@ describe_col_factor <- function(x, with_summary = TRUE) {
 }
 
 describe_col_num <- function(x, with_summary = TRUE) {
+  # Generate histogram data
+  hist_data <- hist(x, plot = FALSE, breaks = "Sturges")
+  
+  # Create a base64-encoded image of the histogram
+  hist_img <- tempfile(fileext = ".png")
+  png(hist_img)
+  plot(hist_data, main = "", xlab = "", ylab = "", col = "lightblue", border = "white", cex.lab = 2, cex.axis = 3)
+  dev.off()
+  hist_base64 <- base64enc::dataURI(file = hist_img, mime = "image/png")
+  
   tags$div(
     style = css(padding = "3px 0", fontSize = "x-small"),
     tags$div(
@@ -78,6 +87,7 @@ describe_col_num <- function(x, with_summary = TRUE) {
       phosphoricons::ph("hash"),
       "numeric"
     ),
+    tags$img(src = hist_base64, style = css(width = "90px")),  # Add histogram image
     if (with_summary) {
       tagList(
         tags$hr(style = css(margin = "3px 0")),
